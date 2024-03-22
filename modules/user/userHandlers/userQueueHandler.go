@@ -5,16 +5,16 @@ import (
 	"github.com/DioSurreal/Online-Shopping/modules/user/userUsecases"
 )
 type (
-	UserHttpHandlersService interface{}
+	UserQueueHandlersService interface{}
 
-	userHttpHandler struct {
+	userQueueHandler struct {
 		cfg  *config.Config
 		userUsecase userUsecases.UserUsecasesService
 	}
 )
 
-func NewUserHttpHandler(cfg *config.Config,userUsecase userUsecases.UserUsecasesService) UserHttpHandlersService {
-	return &userHttpHandler{
+func NewUserQueueHandler(cfg *config.Config,userUsecase userUsecases.UserUsecasesService) UserQueueHandlersService {
+	return &userQueueHandler{
 		cfg: cfg,
 		userUsecase: userUsecase,
 	}
