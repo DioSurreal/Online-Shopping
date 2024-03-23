@@ -1,0 +1,5 @@
+// Version
+syntax = "proto3";
+
+// Package name
+option go_package = "github.com/DioSurreal/Online-Shopping";

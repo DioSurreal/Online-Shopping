@@ -1,9 +1,13 @@
 package server
 
 import (
+	"log"
+
+	userPb "github.com/DioSurreal/Online-Shopping/modules/user/userPb"
 	"github.com/DioSurreal/Online-Shopping/modules/user/userHandlers"
 	"github.com/DioSurreal/Online-Shopping/modules/user/userRepositories"
 	"github.com/DioSurreal/Online-Shopping/modules/user/userUsecases"
+	"github.com/DioSurreal/Online-Shopping/pkg/grpccon"
 )
 
 func (s *server) userService() {
@@ -13,6 +17,14 @@ func (s *server) userService() {
     userGrpcHandler := userHandlers.NewUserGrpcHandler(userUsecase)
 	userQueueHandler := userHandlers.NewUserQueueHandler(s.cfg,userUsecase)
 
+	go func() {
+		grpcServer, lis := grpccon.NewGrpcServer(&s.cfg.Jwt, s.cfg.Grpc.UserUrl)
+
+		userPb.RegisterUserGrpcServiceServer(grpcServer, userGrpcHandler)
+
+		log.Printf("User gRPC server listening on %s", s.cfg.Grpc.UserUrl)
+		grpcServer.Serve(lis)
+	}()
 	_  = userHttpHandler
 	_ = userGrpcHandler
 	_ = userQueueHandler
