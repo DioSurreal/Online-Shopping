@@ -21,7 +21,7 @@ func main() {
 		return os.Args[1]
 	}())
 
-	db := database.DbConn(&cfg,ctx)
+	db := database.DbConn(ctx,&cfg)
 	defer db.Disconnect(ctx)
 	log.Println(db)
 

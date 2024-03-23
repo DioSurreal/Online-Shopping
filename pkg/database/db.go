@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func DbConn(cfg *config.Config,pctx context.Context) *mongo.Client {
+func DbConn(pctx context.Context,cfg *config.Config) *mongo.Client {
 	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx,options.Client().ApplyURI(cfg.Db.Url))
