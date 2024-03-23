@@ -21,7 +21,7 @@ func main() {
 	}())
 
 	switch cfg.App.Name {
-	case "player":
+	case "user":
 		migration.UserMigrate(ctx, &cfg)
 	case "auth":
 		migration.AuthMigrate(ctx, &cfg)

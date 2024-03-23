@@ -86,7 +86,7 @@ func UserMigrate(pctx context.Context, cfg *config.Config) {
 				Username: "User003",
 				UserRoles: []user.UserRole{
 					{
-						RoleTitle: "player",
+						RoleTitle: "user",
 						RoleCode:  0,
 					},
 				},
