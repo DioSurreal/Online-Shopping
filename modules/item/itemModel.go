@@ -1,6 +1,6 @@
 package item
 
-import "github.com/DioSurreal/Online-Shopping/modules/model"
+import "github.com/DioSurreal/Online-Shopping/modules/models"
 
 
 type (
@@ -21,7 +21,7 @@ type (
 
 	ItemSearchReq struct {
 		Title string `query:"title" validate:"max=64"`
-		model.PaginateReq
+		models.PaginateReq
 	}
 
 	ItemUpdateReq struct {

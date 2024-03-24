@@ -61,8 +61,6 @@ func Start(pctx context.Context, cfg *config.Config, db *mongo.Client) {
 		middleware: newMiddleware(cfg),
 	}
 
-	
-
 	// Basic Middleware
 	// Request Timeout
 	s.app.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
@@ -84,7 +82,7 @@ func Start(pctx context.Context, cfg *config.Config, db *mongo.Client) {
 	switch s.cfg.App.Name {
 	case "auth":
 		s.authService()
-	case "player":
+	case "user":
 		s.userService()
 	case "item":
 		s.itemService()

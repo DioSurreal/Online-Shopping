@@ -2,30 +2,28 @@ package inventory
 
 import (
 	"github.com/DioSurreal/Online-Shopping/modules/item"
-	"github.com/DioSurreal/Online-Shopping/modules/model"
+	"github.com/DioSurreal/Online-Shopping/modules/models"
 )
-
-
 
 type (
 	UpdateInventoryReq struct {
-		PlayerId string `json:"player_id" validate:"required,max=64"`
-		ItemId   string `json:"item_id" validate:"required,max=64"`
+		UserId string `json:"user_id" validate:"required,max=64"`
+		ItemId string `json:"item_id" validate:"required,max=64"`
 	}
 
 	ItemInInventory struct {
 		InventoryId string `json:"inventory_id"`
-		PlayerId    string `json:"player_id"`
+		UserId      string `json:"user_id"`
 		*item.ItemShowCase
 	}
 
 	InventorySearchReq struct {
-		model.PaginateReq
+		models.PaginateReq
 	}
 
-	RollbackPlayerInventoryReq struct {
+	RollbackUserInventoryReq struct {
 		InventoryId string `json:"inventory_id"`
-		PlayerId    string `json:"player_id"`
+		UserId      string `json:"user_id"`
 		ItemId      string `json:"item_id"`
 	}
 )

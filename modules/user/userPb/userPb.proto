@@ -20,15 +20,15 @@ message CredentialSearchReq {
 }
 
 message FindOneUserProfileToRefreshReq {
-    string playerId = 1;
+    string userId = 1;
 }
 
 message GetUserSavingAccountReq {
-    string playerId = 1;
+    string userId = 1;
 }
 
 message GetUserSavingAccountRes {
-    string playerId = 1;
+    string userId = 1;
     double balance = 2;
 }
 

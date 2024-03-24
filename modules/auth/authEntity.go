@@ -9,7 +9,7 @@ import (
 type (
 	Credential struct {
 		Id           primitive.ObjectID `bson:"_id,omitempty"`
-		PlayerId     string             `bson:"player_id"`
+		UserId       string             `bson:"user_id"`
 		RoleCode     int                `bson:"role_code"`
 		AccessToken  string             `bson:"access_token"`
 		RefreshToken string             `bson:"refresh_token"`
@@ -24,7 +24,7 @@ type (
 	}
 
 	UpdateRefreshTokenReq struct {
-		PlayerId     string    `bson:"player_id"`
+		UserId       string    `bson:"user_id"`
 		AccessToken  string    `bson:"access_token"`
 		RefreshToken string    `bson:"refresh_token"`
 		UpdatedAt    time.Time `bson:"updated_at"`

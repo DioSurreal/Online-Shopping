@@ -170,7 +170,7 @@ type FindOneUserProfileToRefreshReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PlayerId string `protobuf:"bytes,1,opt,name=playerId,proto3" json:"playerId,omitempty"`
+	UserId string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
 }
 
 func (x *FindOneUserProfileToRefreshReq) Reset() {
@@ -205,9 +205,9 @@ func (*FindOneUserProfileToRefreshReq) Descriptor() ([]byte, []int) {
 	return file_modules_user_userPb_userPb_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *FindOneUserProfileToRefreshReq) GetPlayerId() string {
+func (x *FindOneUserProfileToRefreshReq) GetUserId() string {
 	if x != nil {
-		return x.PlayerId
+		return x.UserId
 	}
 	return ""
 }
@@ -217,7 +217,7 @@ type GetUserSavingAccountReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PlayerId string `protobuf:"bytes,1,opt,name=playerId,proto3" json:"playerId,omitempty"`
+	UserId string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
 }
 
 func (x *GetUserSavingAccountReq) Reset() {
@@ -252,9 +252,9 @@ func (*GetUserSavingAccountReq) Descriptor() ([]byte, []int) {
 	return file_modules_user_userPb_userPb_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetUserSavingAccountReq) GetPlayerId() string {
+func (x *GetUserSavingAccountReq) GetUserId() string {
 	if x != nil {
-		return x.PlayerId
+		return x.UserId
 	}
 	return ""
 }
@@ -264,7 +264,7 @@ type GetUserSavingAccountRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PlayerId string  `protobuf:"bytes,1,opt,name=playerId,proto3" json:"playerId,omitempty"`
+	UserId string  `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
 	Balance  float64 `protobuf:"fixed64,2,opt,name=balance,proto3" json:"balance,omitempty"`
 }
 
@@ -300,9 +300,9 @@ func (*GetUserSavingAccountRes) Descriptor() ([]byte, []int) {
 	return file_modules_user_userPb_userPb_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GetUserSavingAccountRes) GetPlayerId() string {
+func (x *GetUserSavingAccountRes) GetUserId() string {
 	if x != nil {
-		return x.PlayerId
+		return x.UserId
 	}
 	return ""
 }

@@ -18,16 +18,16 @@ func InventoryMigrate(pctx context.Context, cfg *config.Config) {
 	db := inventoryDbConn(pctx, cfg)
 	defer db.Client().Disconnect(pctx)
 
-	col := db.Collection("players_inventory")
+	col := db.Collection("users_inventory")
 
 	indexs, _ := col.Indexes().CreateMany(pctx, []mongo.IndexModel{
-		{Keys: bson.D{{"player_id", 1}, {"item_id", 1}}},
+		{Keys: bson.D{{"user_id", 1}, {"item_id", 1}}},
 	})
 	for _, index := range indexs {
 		log.Printf("Index: %s", index)
 	}
 
-	col = db.Collection("players_inventory_queue")
+	col = db.Collection("users_inventory_queue")
 
 	results, err := col.InsertOne(pctx, bson.M{"offset": -1}, nil)
 	if err != nil {

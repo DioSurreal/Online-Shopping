@@ -7,7 +7,7 @@ import (
 )
 
 type (
-	PlayerLoginReq struct {
+	UserLoginReq struct {
 		Email    string `json:"email" form:"email" validate:"required,email,max=255"`
 		Password string `json:"password" form:"password" validate:"required,max=32"`
 	}
@@ -17,8 +17,8 @@ type (
 		RefreshToken string `json:"refresh_token" form:"refresh_token" validate:"required,max=500"`
 	}
 
-	InsertPlayerRole struct {
-		PlayerId string `json:"player_id" validate:"required"`
+	InsertUserRole struct {
+		UserId   string `json:"user_id" validate:"required"`
 		RoleCode []int  `json:"role_id" validate:"required"`
 	}
 
@@ -29,7 +29,7 @@ type (
 
 	CredentialRes struct {
 		Id           string    `json:"_id"`
-		PlayerId     string    `json:"player_id"`
+		UserId       string    `json:"user_id"`
 		RoleCode     int       `json:"role_code"`
 		AccessToken  string    `json:"access_token"`
 		RefreshToken string    `json:"refresh_token"`

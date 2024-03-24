@@ -11,15 +11,15 @@ type (
 	}
 
 	PaymentTransferReq struct {
-		PlayerId string  `json:"player_id"`
-		ItemId   string  `json:"item_id"`
-		Amout    float64 `json:"amount"`
+		UserId string  `json:"user_id"`
+		ItemId string  `json:"item_id"`
+		Amout  float64 `json:"amount"`
 	}
 
 	PaymentTransferRes struct {
 		InventoryId   string  `json:"inventory_id"`
 		TransactionId string  `json:"transaction_id"`
-		PlayerId      string  `json:"player_id"`
+		UserId        string  `json:"user_id"`
 		ItemId        string  `json:"item_id"`
 		Amount        float64 `json:"amount"`
 		Error         string  `json:"error"`
