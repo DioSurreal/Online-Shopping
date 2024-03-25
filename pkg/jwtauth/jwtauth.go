@@ -63,9 +63,9 @@ func NewAccessToken(secret string, expiredAt int64, claims *Claims) AuthFactory 
 			Claims: &AuthMapClaims{
 				Claims: claims,
 				RegisteredClaims: jwt.RegisteredClaims{
-					Issuer:    "hellosekai.com",
+					Issuer:    "onlineshopping.com",
 					Subject:   "access-token",
-					Audience:  []string{"hellosekai.com"},
+					Audience:  []string{"onlineshopping.com"},
 					ExpiresAt: jwtTimeDurationCal(expiredAt),
 					NotBefore: jwt.NewNumericDate(now()),
 					IssuedAt:  jwt.NewNumericDate(now()),
@@ -82,9 +82,9 @@ func NewRefreshToken(secret string, expiredAt int64, claims *Claims) AuthFactory
 			Claims: &AuthMapClaims{
 				Claims: claims,
 				RegisteredClaims: jwt.RegisteredClaims{
-					Issuer:    "hellosekai.com",
+					Issuer:    "onlineshopping.com",
 					Subject:   "refresh-token",
-					Audience:  []string{"hellosekai.com"},
+					Audience:  []string{"onlineshopping.com"},
 					ExpiresAt: jwtTimeDurationCal(expiredAt),
 					NotBefore: jwt.NewNumericDate(now()),
 					IssuedAt:  jwt.NewNumericDate(now()),
@@ -101,9 +101,9 @@ func ReloadToken(secret string, expiredAt int64, claims *Claims) string {
 			Claims: &AuthMapClaims{
 				Claims: claims,
 				RegisteredClaims: jwt.RegisteredClaims{
-					Issuer:    "hellosekai.com",
+					Issuer:    "onlineshopping.com",
 					Subject:   "refresh-token",
-					Audience:  []string{"hellosekai.com"},
+					Audience:  []string{"onlineshopping.com"},
 					ExpiresAt: jwtTimeRepeatAdapter(expiredAt),
 					NotBefore: jwt.NewNumericDate(now()),
 					IssuedAt:  jwt.NewNumericDate(now()),
@@ -122,10 +122,10 @@ func NewApiKey(secret string) AuthFactory {
 			Claims: &AuthMapClaims{
 				Claims: &Claims{},
 				RegisteredClaims: jwt.RegisteredClaims{
-					Issuer:    "hellosekai.com",
+					Issuer:    "onlineshopping.com",
 					Subject:   "api-key",
-					Audience:  []string{"hellosekai.com"},
-					ExpiresAt: jwtTimeDurationCal(31560000),
+					Audience:  []string{"onlineshopping.com"},
+					ExpiresAt: jwtTimeDurationCal(31560000), // fix api key 1 year
 					NotBefore: jwt.NewNumericDate(now()),
 					IssuedAt:  jwt.NewNumericDate(now()),
 				},
