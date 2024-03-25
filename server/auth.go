@@ -34,7 +34,7 @@ func (s *server) authService() {
 	//Health Check
 	auth.GET("",s.healthCheckService)
 
-	auth.GET("/test/:player_id", s.healthCheckService)
+	auth.GET("/test/:user_id", s.healthCheckService)
 	auth.POST("/auth/login", authHttpHandler.Login)
 	auth.POST("/auth/refresh-token", authHttpHandler.RefreshToken)
 	auth.POST("/auth/logout", authHttpHandler.Login)

@@ -14,9 +14,11 @@ type(
 )
 
 func NewItemGrpcHandler(itemUsecase itemUsecases.ItemUsecasesService) *itemGrpcHandler {
-	return &itemGrpcHandler{itemUsecase: itemUsecase}
+	return &itemGrpcHandler{
+		itemUsecase: itemUsecase,
+	}
 }
 
 func (g *itemGrpcHandler) FindItemsInIds(ctx context.Context, req *itemPb.FindItemsInIdsReq) (*itemPb.FindItemsInIdsRes, error) {
-	return nil,nil
+	return g.itemUsecase.FindItemInIds(ctx, req)
 }
