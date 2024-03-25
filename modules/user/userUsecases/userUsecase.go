@@ -3,9 +3,11 @@ package userUsecases
 import (
 	"context"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/DioSurreal/Online-Shopping/modules/user"
+	userPb "github.com/DioSurreal/Online-Shopping/modules/user/userPb"
 	"github.com/DioSurreal/Online-Shopping/modules/user/userRepositories"
 	"github.com/DioSurreal/Online-Shopping/pkg/utils"
 	"golang.org/x/crypto/bcrypt"
@@ -17,6 +19,8 @@ type (
 		FindOneUserProfile(pctx context.Context, userId string) (*user.UserProfile, error)
 		AddUserMoney(pctx context.Context, req *user.CreateUserTransactionReq) (*user.UserSavingAccount, error)
 		GetUserSavingAccount(pctx context.Context, userId string) (*user.UserSavingAccount, error)
+		FindOneUserCredential(pctx context.Context, password, email string) (*userPb.UserProfile, error) 
+		FindOneUserProfileToRefresh(pctx context.Context, userId string) (*userPb.UserProfile, error)
 	}
 
 	userUsecase struct {
@@ -92,3 +96,53 @@ func (u *userUsecase) GetUserSavingAccount(pctx context.Context, userId string) 
 	return u.userRepository.GetUserSavingAccount(pctx, userId)
 }
 
+func (u *userUsecase) FindOneUserCredential(pctx context.Context, password, email string) (*userPb.UserProfile, error) {
+	result, err := u.userRepository.FindOneUserCredential(pctx, email)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(password)); err != nil {
+		log.Printf("Error: FindOneUserCredential: %s", err.Error())
+		return nil, errors.New("error: password is invalid")
+	}
+
+	roleCode := 0
+	for _, v := range result.UserRoles {
+		roleCode += v.RoleCode
+	}
+
+	loc, _ := time.LoadLocation("Asia/Bangkok")
+
+	return &userPb.UserProfile{
+		Id:        result.Id.Hex(),
+		Email:     result.Email,
+		Username:  result.Username,
+		RoleCode:  int32(roleCode),
+		CreatedAt: result.CreatedAt.In(loc).String(),
+		UpdatedAt: result.UpdatedAt.In(loc).String(),
+	}, nil
+}
+
+func (u *userUsecase) FindOneUserProfileToRefresh(pctx context.Context, userId string) (*userPb.UserProfile, error) {
+	result, err := u.userRepository.FindOneUserProfileToRefresh(pctx, userId)
+	if err != nil {
+		return nil, err
+	}
+
+	roleCode := 0
+	for _, v := range result.UserRoles {
+		roleCode += v.RoleCode
+	}
+
+	loc, _ := time.LoadLocation("Asia/Bangkok")
+
+	return &userPb.UserProfile{
+		Id:        result.Id.Hex(),
+		Email:     result.Email,
+		Username:  result.Username,
+		RoleCode:  int32(roleCode),
+		CreatedAt: result.CreatedAt.In(loc).String(),
+		UpdatedAt: result.UpdatedAt.In(loc).String(),
+	}, nil
+}

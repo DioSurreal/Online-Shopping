@@ -13,7 +13,7 @@ authPb "github.com/DioSurreal/Online-Shopping/modules/auth/authPb"
 
 func (s *server) authService() {
 	authRepository := authRepositories.NewAuthRepository(s.db)
-	authUsecase := authUsecases.NewAuthUsecase(authRepository)
+	authUsecase := authUsecase.NewAuthUsecase(authRepository)
 	authHttpHandler := authHandlers.NewAuthHttpHandler(s.cfg,authUsecase)
     authGrpcHandler := authHandlers.NewAuthGrpcHandler(authUsecase)
 
@@ -27,11 +27,15 @@ func (s *server) authService() {
 		log.Printf("Auth gRPC server listening on %s", s.cfg.Grpc.AuthUrl)
 		grpcServer.Serve(lis)
 	}()
-	_  = authHttpHandler
 	_ = authGrpcHandler
 
 	auth := s.app.Group("/auth_v1")
 
 	//Health Check
 	auth.GET("",s.healthCheckService)
+
+	auth.GET("/test/:player_id", s.healthCheckService)
+	auth.POST("/auth/login", authHttpHandler.Login)
+	auth.POST("/auth/refresh-token", authHttpHandler.RefreshToken)
+	auth.POST("/auth/logout", authHttpHandler.Login)
 }

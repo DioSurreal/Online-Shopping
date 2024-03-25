@@ -6,6 +6,7 @@ import (
 	"log"
 	"time"
 
+	
 	"github.com/DioSurreal/Online-Shopping/modules/models"
 	"github.com/DioSurreal/Online-Shopping/modules/user"
 	"github.com/DioSurreal/Online-Shopping/pkg/utils"
@@ -24,6 +25,8 @@ type (
 		FindOneUserProfile(pctx context.Context, userId string) (*user.UserProfileBson, error)
 		InsertOneUserTranscation(pctx context.Context, req *user.UserTransaction) (primitive.ObjectID, error)
 		GetUserSavingAccount(pctx context.Context, userId string) (*user.UserSavingAccount, error)
+		FindOneUserCredential(pctx context.Context, email string) (*user.User, error)
+		FindOneUserProfileToRefresh(pctx context.Context, userId string) (*user.User, error)
 	}
 
 	userRepository struct{
@@ -199,3 +202,38 @@ func (r *userRepository) GetUserSavingAccount(pctx context.Context, userId strin
 
 	return result, nil
 }
+
+func (r *userRepository) FindOneUserCredential(pctx context.Context, email string) (*user.User, error) {
+	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
+	defer cancel()
+
+	db := r.userDbConn(ctx)
+	col := db.Collection("users")
+
+	result := new(user.User)
+
+	if err := col.FindOne(ctx, bson.M{"email": email}).Decode(result); err != nil {
+		log.Printf("Error: FindOneUserCredential: %s", err.Error())
+		return nil, errors.New("error: email is invalid")
+	}
+
+	return result, nil
+}
+
+func (r *userRepository) FindOneUserProfileToRefresh(pctx context.Context, userId string) (*user.User, error) {
+	ctx, cancel := context.WithTimeout(pctx, 10*time.Second)
+	defer cancel()
+
+	db := r.userDbConn(ctx)
+	col := db.Collection("users")
+
+	result := new(user.User)
+
+	if err := col.FindOne(ctx, bson.M{"_id": utils.ConvertToObjectId(userId)}).Decode(result); err != nil {
+		log.Printf("Error: FindOneUserProfileToRefresh: %s", err.Error())
+		return nil, errors.New("error: user profile not found")
+	}
+
+	return result, nil
+}
+
