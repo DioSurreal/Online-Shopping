@@ -9,14 +9,17 @@ import (
 func (s *server) inventoryService() {
 	inventoryRepository := inventoryRepositories.NewInventoryRepository(s.db)
 	inventoryUsecase := inventoryUsecases.NewInventoryUsecase(inventoryRepository)
-	inventoryHttpHandler := inventoryHandlers.NewInventoryHttpHandler(s.cfg,inventoryUsecase)
-    inventoryGrpcHandler := inventoryHandlers.NewInventoryGrpcHandler(inventoryUsecase)
+	inventoryHttpHandler := inventoryHandlers.NewInventoryHttpHandler(s.cfg, inventoryUsecase)
+	inventoryqueueHandler := inventoryHandlers.NewInventoryQueueHandler(s.cfg, inventoryUsecase)
 
-	_  = inventoryHttpHandler
-	_ = inventoryGrpcHandler
+	go inventoryqueueHandler.AddUserItem()
+	go inventoryqueueHandler.RollbackAddUserItem()
+	go inventoryqueueHandler.RemoveUserItem()
+	go inventoryqueueHandler.RollbackRemoveUserItem()
 
 	inventory := s.app.Group("/inventory_v1")
 
 	//Health Check
-	inventory.GET("",s.healthCheckService)
+	inventory.GET("", s.healthCheckService)
+	inventory.GET("/inventory/:user_id", inventoryHttpHandler.FindUserItems, s.middleware.JwtAuthorization, s.middleware.UserIdParamValidation)
 }
